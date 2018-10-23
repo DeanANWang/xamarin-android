@@ -235,7 +235,7 @@ AndroidSystem::monodroid_read_file_into_memory (const char *path, char **value)
 		struct stat fileStat;
 		if (fstat (fileno (fp), &fileStat) == 0) {
 			r = fileStat.st_size+1;
-			if (value && (*value = malloc (r))) {
+			if (value && (*value = (char *)malloc (r))) {
 				fread (*value, 1, fileStat.st_size, fp);
 			}
 		}
