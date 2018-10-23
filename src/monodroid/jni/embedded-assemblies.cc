@@ -404,11 +404,11 @@ gather_bundled_assemblies_from_apk (
 				continue;
 			}
 
-			if (strcmp ("typemap.jm", cur_entry_name) == 0) {
+			if (utils.ends_with (cur_entry_name, ".jm")) {
 				add_type_mapping (&java_to_managed_maps, apk, cur_entry_name, ((const char*) mmap_info.area) + offset);
 				continue;
 			}
-			if (strcmp ("typemap.mj", cur_entry_name) == 0) {
+			if (utils.ends_with (cur_entry_name, ".mj")) {
 				add_type_mapping (&managed_to_java_maps, apk, cur_entry_name, ((const char*) mmap_info.area) + offset);
 				continue;
 			}
