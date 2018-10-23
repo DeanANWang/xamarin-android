@@ -488,7 +488,8 @@ gather_bundled_assemblies_from_apk (
 }
 
 int
-try_load_typemaps_from_directory (const char *path) {
+try_load_typemaps_from_directory (const char *path)
+{
 	// read the entire typemap file into a string
 	// process the string using the add_type_mapping
 	char *val = NULL;
@@ -496,9 +497,9 @@ try_load_typemaps_from_directory (const char *path) {
 	monodroid_dirent_t b, *e;
 	char *dir_path = utils.path_combine (path, "typemaps");
 	if (dir_path == NULL || !utils.directory_exists (dir_path)) {
-			log_warn (LOG_DEFAULT, "directory does not exist: `%s`", dir_path);
-			free (dir_path);
-			return 0;
+		log_warn (LOG_DEFAULT, "directory does not exist: `%s`", dir_path);
+		free (dir_path);
+		return 0;
 	}
 
 	if ((dir = utils.monodroid_opendir (dir_path)) == NULL) {
@@ -513,16 +514,15 @@ try_load_typemaps_from_directory (const char *path) {
 			int len = androidSystem.monodroid_read_file_into_memory (file_path, &val);
 			if (len > 0 && val != NULL) {
 				if (utils.monodroid_dirent_hasextension (e, ".mj")) {
-					if (!add_type_mapping (&managed_to_java_maps, NULL, NULL, ((const char*)val)))
+					if (!add_type_mapping (&managed_to_java_maps, file_path, NULL, ((const char*)val)))
 						free (val);
 				}
 				if (utils.monodroid_dirent_hasextension (e, ".jm")) {
-					if (!add_type_mapping (&java_to_managed_maps, NULL, NULL, ((const char*)val)))
+					if (!add_type_mapping (&java_to_managed_maps, file_path, NULL, ((const char*)val)))
 						free (val);
 				}
 			}
 		}
-		free (file_path);
 	}
 	utils.monodroid_closedir (dir);
 	free (dir_path);
